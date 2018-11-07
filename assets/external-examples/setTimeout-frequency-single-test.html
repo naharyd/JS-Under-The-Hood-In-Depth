@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html {
+            font-family: sans-serif;
+            line-height: 1.4;
+        }
+
+        img {
+            float: left;
+            margin: 0 10px 10px 0;
+        }
+
+        button {
+            font-size: 50px;
+            font-family: courier;
+            padding: 0.3em;
+        }
+
+        button {
+            background-color: #fff;
+            border: 1px solid #5a5a5a;
+            color: #191919;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ECFDFF;
+            border-color: #0568AE;
+            color: #0568AE;
+        }
+
+        .timeout-wrapper {
+            left: 50%;
+            position: fixed;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .timeout-result {
+            display: inline-block;
+            font-size: 50px;
+            margin-left: 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="timeout-wrapper">
+    <button>Test</button>
+    <span id='timeoutResult' class="timeout-result"></span>
+</div>
+
+
+<script>
+    const result = document.querySelector('#timeoutResult');
+    const results = new Float64Array(100);
+    let pos = 0;
+    let time;
+    let showResults = false;
+    document.querySelector('button').addEventListener('click', () => {
+        let text = '';
+        time = performance.now();
+        setTimeout(() => {
+            let now = performance.now();
+            text += ((now - time)).toFixed(1) + ', ';
+            setTimeout(() => {
+                time = now;
+                now = performance.now();
+                text += ((now - time)).toFixed(1) + ', ';
+                setTimeout(() => {
+                    time = now;
+                    now = performance.now();
+                    text += ((now - time)).toFixed(1) + ', ';
+                    setTimeout(() => {
+                        time = now;
+                        now = performance.now();
+                        text += ((now - time)).toFixed(1) + ', ';
+                        setTimeout(() => {
+                            time = now;
+                            now = performance.now();
+                            text += ((now - time)).toFixed(1) + ', ';
+                            setTimeout(() => {
+                                time = now;
+                                now = performance.now();
+                                text += ((now - time)).toFixed(1) + ', ';
+                                result.textContent = text;
+                            },0)
+                        },0)
+                    },0)
+                },0)
+            },0)
+        }, 0);
+
+
+    });
+</script>
+</body>
+</html>

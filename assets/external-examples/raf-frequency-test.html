@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html {
+            font-family: sans-serif;
+            line-height: 1.4;
+        }
+
+        body {
+            background-color: cadetblue;
+            color: #fff;
+            font-family: sans-serif;
+        }
+
+        img {
+            float: left;
+            margin: 0 10px 10px 0;
+        }
+
+        button {
+            font-size: 50px;
+            font-family: courier;
+            padding: 0.3em;
+        }
+
+        button {
+            background-color: #fff;
+            border: 1px solid #5a5a5a;
+            color: #191919;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ECFDFF;
+            border-color: #0568AE;
+            color: #0568AE;
+        }
+
+        button:first-child {
+            margin-right: 40px;
+        }
+
+        .fps-wrapper {
+            left: 50%;
+            position: fixed;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+
+        .fps-result-wrapper {
+            background-color: #0e1416;
+            border: 1px solid #fff;
+            color: chartreuse;
+            display: block;
+            font-size: 50px;
+            height: 70px;
+            margin: 25px auto;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .fps-result {
+            display: inline-block;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="fps-wrapper">
+    <div>
+        <button id="singleTest">Single Test</button>
+        <button id="infiniteTest">Infinite Test</button>
+    </div>
+    <div class="fps-result-wrapper">
+        <span id='fpsResult' class="fps-result"></span>
+    </div>
+</div>
+
+
+<script>
+    (function() {
+        const result = document.querySelector('#fpsResult');
+        document.querySelector('#singleTest').addEventListener('click', () => {
+            result.textContent = '';
+            window.stopInfinite = true;
+            let start = 0;
+            let count = 0;
+
+            function callback(now) {
+                if (Math.round(now - start) >= 1000) {
+                    const hz = count + 'hz';
+                    result.textContent = hz;
+                } else {
+                    requestAnimationFrame(callback);
+                }
+
+                count++;
+            }
+
+            requestAnimationFrame((now) => {
+                start = now;
+                callback(now);
+            });
+
+        });
+    })();
+</script>
+
+<script>
+
+    (function () {
+        window.stopInfinite = true;
+        const result = document.querySelector('#fpsResult');
+        const results = new Float64Array(100);
+        let pos = 0;
+        let time;
+        let showResults = false;
+        document.querySelector('#infiniteTest').addEventListener('click', () => {
+            if (!window.stopInfinite){
+                console.warn('Infinite mode is running');
+                return;
+            }
+            result.textContent = '';
+            window.stopInfinite = false;
+            function callback(now) {
+                if (window.stopInfinite) {
+                    console.log('Infinite mode stopped');
+                    return;
+                }
+                const last = time;
+                time = now;
+
+                if (last) {
+                    results[pos] = time - last;
+                    pos = (pos + 1) % results.length;
+
+                    if (!showResults && pos === 0) {
+                        showResults = true;
+                    }
+
+                    if (showResults) {
+                        const average = results.reduce((a, b) => a + b) / results.length;
+                        const hz = Math.round(1000 / average) + 'hz';
+                        result.textContent = hz;
+                    }
+                }
+
+                requestAnimationFrame(callback);
+            }
+
+            requestAnimationFrame(callback);
+
+        });
+    })();
+
+</script>
+
+</body>
+</html>

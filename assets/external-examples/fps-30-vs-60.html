@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FPS 30 VS 60</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background-color: cadetblue;
+            color: #fff;
+            font-family: sans-serif;
+        }
+
+		.container {
+			padding: 20px;
+		}
+		.header {
+			font-size: 2em;
+			display: inline-block;
+			width: 150px;
+			vertical-align: middle;
+		}
+
+		.anim-track {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		.box {
+			width: 100px;
+			height: 100px;
+			background: chartreuse;
+		}
+    </style>
+  </head>
+  <body>
+  <div class="container">
+	  <div class="header">15FPS</div>
+	  <div class="anim-track">
+		  <div class="fps-15 box"></div>
+	  </div>
+  </div>
+  <div class="container">
+	  <div class="header">30FPS</div>
+	  <div class="anim-track">
+		  <div class="fps-30 box"></div>
+	  </div>
+  </div>
+  <div class="container">
+	  <div class="header">60FPS</div>
+	  <div class="anim-track">
+		  <div class="fps-60 box"></div>
+	  </div>
+  </div>
+
+  <script>
+      const stopAnim = new WeakSet();
+
+      function anim15(lastVal, el, queueFunc) {
+          if (stopAnim.has(el)) return;
+          const val = (lastVal + 4) % 300;
+          el.style.transform = `translateX(${val}px)`;
+          queueFunc(() => anim15(val, el, queueFunc));
+      }
+
+      function anim30(lastVal, el, queueFunc) {
+          if (stopAnim.has(el)) return;
+          const val = (lastVal + 2) % 300;
+          el.style.transform = `translateX(${val}px)`;
+          queueFunc(() => anim30(val, el, queueFunc));
+      }
+
+      function anim60(lastVal, el, queueFunc) {
+          if (stopAnim.has(el)) return;
+          const val = (lastVal + 1) % 300;
+          el.style.transform = `translateX(${val}px)`;
+          queueFunc(() => anim60(val, el, queueFunc));
+      }
+
+      anim15(0, document.querySelector('.fps-15'), (callback) =>
+          requestAnimationFrame(() =>
+              requestAnimationFrame(() =>
+                  requestAnimationFrame(() =>
+                      requestAnimationFrame(callback)))));
+      anim30(0, document.querySelector('.fps-30'), (callback) => requestAnimationFrame(() => requestAnimationFrame(callback)));
+      anim60(0, document.querySelector('.fps-60'), requestAnimationFrame);
+  </script>
+  </body>
+</html>

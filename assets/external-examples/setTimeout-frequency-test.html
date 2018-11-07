@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html {
+            font-family: sans-serif;
+            line-height: 1.4;
+        }
+
+        body {
+            background-color: cadetblue;
+            color: #fff;
+            font-family: sans-serif;
+        }
+
+        img {
+            float: left;
+            margin: 0 10px 10px 0;
+        }
+
+        button {
+            font-size: 50px;
+            font-family: courier;
+            padding: 0.3em;
+        }
+
+        button {
+            background-color: #fff;
+            border: 1px solid #5a5a5a;
+            color: #191919;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ECFDFF;
+            border-color: #0568AE;
+            color: #0568AE;
+        }
+
+        button:first-child {
+            margin-right: 40px;
+        }
+
+        .timeout-wrapper {
+            left: 50%;
+            position: fixed;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+
+        .timeout-result-wrapper {
+            background-color: #0e1416;
+            border: 1px solid #fff;
+            color: chartreuse;
+            display: block;
+            font-size: 50px;
+            height: 70px;
+            margin: 25px auto;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .timeout-result {
+            display: inline-block;
+            font-size: 50px;
+        }
+
+        .timeout-result .bold {
+            color: #77ff00;
+            font-size: 55px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="timeout-wrapper">
+    <div>
+        <button id="singleTest">Single Test</button>
+        <button id="infiniteTest">Infinite Test</button>
+    </div>
+    <div class="timeout-result-wrapper">
+        <span id='timeoutResult' class="timeout-result"></span>
+    </div>
+</div>
+
+<script>
+
+    (function() {
+        const result = document.querySelector('#timeoutResult');
+        const results = new Float64Array(100);
+        let pos = 0;
+        let time;
+        let showResults = false;
+        document.querySelector('#singleTest').addEventListener('click', () => {
+            clearTimeout(window.timer)
+            let text = '';
+            time = performance.now();
+            window.timer = setTimeout(() => {
+                let now = performance.now();
+                text += ((now - time)).toFixed(1) + ', ';
+                window.timer = setTimeout(() => {
+                    time = now;
+                    now = performance.now();
+                    text += ((now - time)).toFixed(1) + ', ';
+                    window.timer = setTimeout(() => {
+                        time = now;
+                        now = performance.now();
+                        text += ((now - time)).toFixed(1) + ', ';
+                        window.timer = setTimeout(() => {
+                            time = now;
+                            now = performance.now();
+                            text += ((now - time)).toFixed(1) + ', ';
+                            window.timer = setTimeout(() => {
+                                time = now;
+                                now = performance.now();
+                                text += `<span class="bold">${((now - time)).toFixed(1)}, </span>`;
+                                window.timer = setTimeout(() => {
+                                    time = now;
+                                    now = performance.now();
+                                    text += `<span class="bold">${((now - time)).toFixed(1)}</span>`;
+                                    result.innerHTML = text;
+                                }, 0)
+                            }, 0)
+                        }, 0)
+                    }, 0)
+                }, 0)
+            }, 0);
+
+
+        });
+    })();
+</script>
+
+<script>
+
+    (function() {
+        const result = document.querySelector('#timeoutResult');
+        const results = new Float64Array(100);
+        let pos = 0;
+        let time;
+        let showResults = false;
+        document.querySelector('#infiniteTest').addEventListener('click', () => {
+            clearTimeout(window.timer)
+            function callback() {
+                const last = time;
+                time = performance.now();
+
+                if (last) {
+                    results[pos] = time - last;
+                    pos = (pos + 1) % results.length;
+
+                    if (!showResults && pos === 0) {
+                        showResults = true;
+                    }
+
+                    if (showResults) {
+                        result.textContent = (results.reduce((a, b) => a + b) / results.length).toFixed(1);
+                    }
+                }
+
+                window.timer = setTimeout(callback, 0);
+            }
+
+            callback();
+
+        });
+    })();
+</script>
+</body>
+</html>

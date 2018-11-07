@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Inconsolata';
+    font-style: normal;
+    font-weight: 400;
+    src: url(Inconsolata.ttf) format("truetype");
+    font-display: optional
+}
+
+@font-face {
+    font-family: 'PT Serif';
+    font-style: normal;
+    font-weight: 400;
+    src: url(PT_Serif.ttf) format("truetype");
+    font-display: optional
+}

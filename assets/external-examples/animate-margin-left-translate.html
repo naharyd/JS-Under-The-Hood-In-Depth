@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Compositor Layers</title>
+    <style>
+
+        body {
+            background-color: cadetblue;}
+        * {
+            box-sizing: border-box;
+        }
+
+        .box-container {
+            border-bottom: 1px solid rgba(181, 181, 181, 0.65);
+            margin-top: 2vh;
+        }
+
+        .box {
+            background-color: #f8ff0d;
+            border-radius: 4px;
+            height: 10vw;
+            margin: 5vh 10vw;
+            width: 10vw;
+            position: relative;
+            transition: 1s ease-in-out;
+
+            left: 10vw;
+            transform: translateX(10vw);
+        }
+        .title{
+            color: #f6f6f6;
+            font-size: 18px;
+            font-family: sans-serif;
+        }
+
+        .title b {
+           color: #f8ff0d;
+        }
+
+        /*Margin*/
+        .top-container .animate-with-margin  .box{
+            margin-left: 10vw;
+        }
+
+        .top-container:hover .animate-with-margin  .box{
+            margin-left: 50vw;
+        }
+
+        /*Left*/
+
+        .top-container .animate-with-left  .box{
+            left: 10vw;
+        }
+
+        .top-container:hover .animate-with-left  .box{
+            left: 50vw;
+        }
+
+        /*Transform*/
+        .top-container .animate-with-transform  .box{
+            transform: translateX(10vw);
+        }
+
+        .top-container:hover .animate-with-transform  .box{
+            transform: translateX(50vw);
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-container">
+
+    <div class="box-container animate-with-margin">
+        <div class="title">Animation with '<b>margin</b>' property</div>
+        <div class="box"></div>
+    </div>
+    <div class="box-container animate-with-left">
+        <div class="title">Animation with '<b>left</b>' property</div>
+        <div class="box"></div>
+    </div>
+    <div class="box-container animate-with-transform">
+        <div class="title">Animation with '<b>transform</b>' property</div>
+        <div class="box"></div>
+    </div>
+
+</div>
+</body>
+</html>

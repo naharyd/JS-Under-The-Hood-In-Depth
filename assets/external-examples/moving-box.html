@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Moving Box</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        background-color: cadetblue;
+        color: #fff;
+        font-family: sans-serif;
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        background: chartreuse;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="anim-track">
+      <div class="setTimeout box"></div>
+    </div>
+    
+    
+    <script>
+      
+      const stopAnim = new WeakSet();
+      
+      function anim(lastVal, el, queueFunc) {
+        if (stopAnim.has(el)) return;
+        const val = (lastVal + 1) % 500;
+        el.style.transform = `translateX(${val}px)`;
+        queueFunc(() => anim(val, el, queueFunc));
+      }
+      
+      anim(0, document.querySelector('.setTimeout'), (callback) => setTimeout(callback, 0));
+            
+    </script>
+  </body>
+</html>

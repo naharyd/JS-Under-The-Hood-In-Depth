@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>setTimeout VS rAF</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <style>
+          body {
+              background-color: cadetblue;
+              color: #fff;
+              font-family: sans-serif;
+          }
+
+          .container {
+              padding: 20px;
+          }
+
+          .header {
+              font-size: 2em;
+              display: inline-block;
+              width: 500px;
+              vertical-align: middle;
+          }
+
+          .anim-track {
+              display: inline-block;
+              vertical-align: middle;
+          }
+
+          .box {
+              width: 100px;
+              height: 100px;
+              background: chartreuse;
+          }
+
+          button {
+              font-size: 50px;
+              font-family: courier;
+              padding: 0.3em;
+          }
+
+          button {
+              background-color: #fff;
+              border: 1px solid #5a5a5a;
+              color: #191919;
+              cursor: pointer;
+          }
+
+          button:hover {
+              background-color: #ECFDFF;
+              border-color: #0568AE;
+              color: #0568AE;
+          }
+      </style>
+  </head>
+  <body>
+  <div class="container">
+      <div class="header">setTimeout(callback, 0)</div>
+      <div class="anim-track">
+          <div class="setTimeout box"></div>
+      </div>
+  </div>
+  <div class="container">
+      <div class="header">requestAnimationFrame(callback)</div>
+      <div class="anim-track">
+          <div class="raf box"></div>
+      </div>
+  </div>
+
+  <button id="button">Start Moving</button>
+
+  <script>
+
+      const button = document.getElementById('button');
+      const stopAnim = new WeakSet();
+
+      function anim(lastVal, el, queueFunc) {
+          if (stopAnim.has(el)) return;
+          const val = (lastVal + 1) % 300;
+          el.style.transform = `translateX(${val}px)`;
+          queueFunc(() => anim(val, el, queueFunc));
+      }
+
+      button.onclick = function () {
+          anim(0, document.querySelector('.setTimeout'), (callback) => setTimeout(callback, 0));
+          anim(0, document.querySelector('.raf'), requestAnimationFrame);
+      };
+  </script>
+  </body>
+</html>

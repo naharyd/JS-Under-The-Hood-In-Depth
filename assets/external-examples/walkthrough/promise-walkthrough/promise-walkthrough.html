@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html class=" js">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Promise Walkthrough</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0">
+    <link rel="stylesheet" href="./../main.css">
+    <link rel="stylesheet" href="./../fonts/fonts.css">
+    <link rel="stylesheet" href="./../codehilite.css">
+    <link rel="stylesheet" href="./promise-walkthrough.css">
+    <script src="../eventLoopAnimation.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="event-loop-walkthrough">
+        <div class="js-source">
+            <div class="line-highlight"></div>
+            <div class="codehilite"><pre><span class="nx">button</span><span class="p">.</span><span
+                    class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span
+                    class="p">, () => {</span>
+  <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span
+                        class="nx">then</span><span class="p">( () => {</span>
+    <span class="nb">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'MicroTasks 1'</span><span class="p">)
+  });</span>
+  <span class="nb">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Listener 1'</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">button</span><span class="p">.</span><span
+                        class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span
+                        class="p">, () => {</span>
+  <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span
+                        class="nx">then</span><span class="p">( () => {</span>
+    <span class="nb">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'MicroTasks 2'</span><span class="p">)
+  });</span>
+  <span class="nb">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Listener 2'</span><span class="p">);</span>
+<span class="p">});</span>
+</pre>
+            </div>
+
+            <p></p></div>
+        <table>
+            <tbody>
+            <tr class="task-queue">
+                <th>Tasks Queue</th>
+                <td>
+                    <div class="event-loop-items">
+                        <div class="event-loop-rail">
+                            <div class="event-loop-item">Listener 1</div>
+                            <div class="event-loop-item">Listener 2</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="microtask-queue">
+                <th>Microtasks Queue</th>
+                <td>
+                    <div class="event-loop-items">
+                        <div class="event-loop-rail">
+                            <div class="event-loop-item">promise.then(Listener 1)</div>
+                            <div class="event-loop-item">promise.then(Listener 2)</div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="js-stack">
+                <th>Stack</th>
+                <td>
+                    <div class="event-loop-items"></div>
+                </td>
+            </tr>
+            <tr class="event-loop-log">
+                <th>Log</th>
+                <td>
+                    <div class="event-loop-items">
+                        <div class="event-loop-item">Listener 1</div>
+                        <div class="event-loop-item">MicroTasks 1</div>
+                        <div class="event-loop-item">Listener 2</div>
+                        <div class="event-loop-item">MicroTasks 2</div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="event-loop-controls">
+            <svg viewBox="0 0 5 2">
+                <path d="M2,0 L2,2 L0,1 z"></path>
+                <path d="M3,0 L5,1 L3,2 z"></path>
+                <path class="prev-btn" d="M0,0 H2.5V2H0z"></path>
+                <path class="next-btn" d="M2.5,0 H5V2H2.5z"></path>
+            </svg>
+        </div>
+        <div class="event-loop-commentary">
+            <div class="event-loop-commentary-item"></div>
+        </div>
+    </div>
+    <p></p>
+    <script src="promise-walkthrough.js"></script>
+</div>
+
+</body>
+</html>

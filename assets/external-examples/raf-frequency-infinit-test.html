@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello!</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html {
+            font-family: sans-serif;
+            line-height: 1.4;
+        }
+
+        img {
+            float: left;
+            margin: 0 10px 10px 0;
+        }
+
+        button {
+            font-size: 50px;
+            font-family: courier;
+            padding: 0.3em;
+        }
+
+        button {
+            background-color: #fff;
+            border: 1px solid #5a5a5a;
+            color: #191919;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ECFDFF;
+            border-color: #0568AE;
+            color: #0568AE;
+        }
+
+        .fps-wrapper {
+            left: 50%;
+            position: fixed;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .fps-result {
+            display: inline-block;
+            font-size: 50px;
+            margin-left: 25px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+<div class="fps-wrapper">
+    <button>Test</button>
+    <span id='fpsResult' class="fps-result"></span>
+</div>
+
+
+<script>
+    const result = document.querySelector('#fpsResult');
+    const results = new Float64Array(100);
+	let pos = 0;
+    let time;
+    let showResults = false; 
+    document.querySelector('button').addEventListener('click', () => {
+        function callback(now) {
+        const last = time;
+        time = now;
+        
+        if (last) {
+          results[pos] = time - last;
+          pos = (pos + 1) % results.length;
+          
+          if (!showResults && pos === 0) {
+            showResults = true;
+          }
+
+          if (showResults) {
+            const average = results.reduce((a, b) => a + b) / results.length;
+            const hz = Math.round(1000 / average) + 'hz';
+            result.textContent = hz;
+          }
+        }
+        
+        requestAnimationFrame(callback);
+      }
+      
+      requestAnimationFrame(callback);
+
+    });
+</script>
+</body>
+</html>
