@@ -3,7 +3,7 @@ JS Under The Hood - In Depth Presentation
 
 1) Open presentation in Chrome only
 2) Navigation by Left/Right/Up keyboard arrows
-3) For external examples (loaded by iframe) there will be a gentle dotted rectangle/border. If you are focus on it, keyboard navigation will not work, you will need to click/focuse outside the rectangle and then navigation will work
+3) For external examples (loaded by iframe) there will be a gentle dotted rectangle/border. If you are focus on it, keyboard navigation will not work, you will need to click/focus outside the rectangle and then navigation will work
 
 Open presentation by github pages or localhost.
 
