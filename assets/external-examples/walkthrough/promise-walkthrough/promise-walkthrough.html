@@ -20,8 +20,7 @@
             <div class="codehilite"><pre><span class="nx">button</span><span class="p">.</span><span
                     class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span
                     class="p">, () => {</span>
-  <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span
-                        class="nx">then</span><span class="p">( () => {</span>
+  <span class="nb">queueMicrotask</span><span class="p">( () => {</span>
     <span class="nb">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'MicroTasks 1'</span><span class="p">)
   });</span>
   <span class="nb">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Listener 1'</span><span class="p">);</span>
@@ -30,8 +29,7 @@
 <span class="nx">button</span><span class="p">.</span><span
                         class="nx">addEventListener</span><span class="p">(</span><span class="s1">'click'</span><span
                         class="p">, () => {</span>
-  <span class="nb">Promise</span><span class="p">.</span><span class="nx">resolve</span><span class="p">().</span><span
-                        class="nx">then</span><span class="p">( () => {</span>
+  <span class="nb">queueMicrotask</span><span class="p">( () => {</span>
     <span class="nb">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'MicroTasks 2'</span><span class="p">)
   });</span>
   <span class="nb">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Listener 2'</span><span class="p">);</span>
@@ -58,8 +56,8 @@
                 <td>
                     <div class="event-loop-items">
                         <div class="event-loop-rail">
-                            <div class="event-loop-item">promise.then(Listener 1)</div>
-                            <div class="event-loop-item">promise.then(Listener 2)</div>
+                            <div class="event-loop-item">queueMicrotask(Listener 1)</div>
+                            <div class="event-loop-item">queueMicrotask(Listener 2)</div>
                         </div>
                     </div>
                 </td>

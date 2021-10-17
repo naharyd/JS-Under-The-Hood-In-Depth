@@ -62,7 +62,7 @@
 
     button.onclick = function () {
         function loop() {
-          Promise.resolve().then(loop);
+          queueMicrotask(loop);
         }
         loop();
     };

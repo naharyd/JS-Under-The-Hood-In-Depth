@@ -10,12 +10,12 @@
         font-family: sans-serif;
         line-height: 1.4;
       }
-      
+
       img {
         float: left;
         margin: 0 10px 10px 0;
       }
-      
+
       button {
         font-size: 50px;
         font-family: courier;
@@ -46,8 +46,8 @@
     <button id="button">
       Test rAF Queue Sequence
     </button>
-    
-    
+
+
     <script>
 	  function testRAFQueueSequence() {
           requestAnimationFrame(() => {
@@ -58,7 +58,7 @@
                   requestAnimationFrame(() => {
                       console.log("rAF 4");
                   });
-                  Promise.resolve().then(() => {
+                  queueMicrotask(() => {
                       console.log("microtask")
                   });
               }, 0);
